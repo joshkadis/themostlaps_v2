@@ -4,7 +4,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joshkadis/themostlaps.git"
+    "url": "git+https://github.com/joshkadis/themostlaps_v2.git"
   },
   "author": "Josh Kadis",
   "engines": {
