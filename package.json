@@ -2,6 +2,14 @@
   "name": "themostlaps_v2",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshkadis/themostlaps.git"
+  },
+  "author": "Josh Kadis",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,7 +19,7 @@
   "dependencies": {
     "@next/font": "13.1.1",
     "eslint": "8.30.0",
-    "eslint-config-next": "13.1.1",
+    "eslint-config-next": "^12.0.4",
     "next": "13.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
