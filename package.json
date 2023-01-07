@@ -18,11 +18,17 @@
   },
   "dependencies": {
     "@next/font": "13.1.x",
-    "eslint": "8.30.x",
-    "eslint-config-next": "13.1.x",
     "mongoose": "^6.8.2",
     "next": "13.1.x",
     "react": "18.2.x",
     "react-dom": "18.2.x"
+  },
+  "devDependencies": {
+    "eslint": "8.30.x",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-next": "13.1.x",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-prettier": "^4.2.1"
   }
 }
