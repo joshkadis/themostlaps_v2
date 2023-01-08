@@ -11,10 +11,11 @@
     "node": "18.x"
   },
   "scripts": {
-    "dev": "next dev",
+    "start": "NODE_ENV=production node server.js",
+    "dev": "NODE_ENV=development node --inspect server.js",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@next/font": "13.1.x",
