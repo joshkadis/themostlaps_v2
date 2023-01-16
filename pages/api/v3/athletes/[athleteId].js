@@ -1,5 +1,5 @@
 import models from "lib/db/models";
-import APIAthlete from "lib/api/models/APIAthlete";
+import APIAthlete, { projection } from "lib/api/models/APIAthlete";
 
 const { Athlete } = models();
 
