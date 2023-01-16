@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     return;
   }
 
-  const athleteDoc = await Athlete.findById(athleteId);
+  const athleteDoc = await Athlete.findById(athleteId, projection);
   if (!athleteDoc) {
     res.status(404).json({ error: `Athlete ID not found: ${athleteId}` });
   }
