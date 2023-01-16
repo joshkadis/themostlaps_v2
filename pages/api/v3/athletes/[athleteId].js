@@ -3,6 +3,13 @@ import APIAthlete, { projection } from "lib/api/models/APIAthlete";
 
 const { Athlete } = models();
 
+/**
+ * Handle single-athlete request by ID
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @returns void
+ */
 export default async function handler({ query = {} }, res) {
   const { athleteId = "" } = query;
 
