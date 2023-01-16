@@ -1,8 +1,8 @@
 import models from "lib/db/models";
-import APIAthlete from "lib/api/models/APIAthlete";
+import APIAthlete, { projection } from "lib/api/models/APIAthlete";
 
 const { Athlete } = models();
-const DEFAULT_PER_PAGE = "25";
+const DEFAULT_PER_PAGE = 25;
 const TYPES = ["allTime", "single"];
 const LOCATIONS = ["prospectpark", "centralpark"];
 
@@ -53,25 +53,48 @@ async function rankingForLocation(query) {
     return { status: 400 };
   }
 
-  const { location = "", type = "" } = query;
+  const {
+    location = "",
+    type = "allTime",
+    per_page: limit = DEFAULT_PER_PAGE,
+    order = "DESC",
+    page = 1,
+  } = query;
+
   if (!LOCATIONS.includes(location)) {
     return { status: 404 };
   }
 
-  let sort = {};
-  if (type) {
-    sort = { [`stats.locations.${location}.${type}`]: -1 };
-  }
+  const orderValue = order.toLowerCase() === "asc" ? 1 : -1;
+  const sort = { [`stats.locations.${location}.${type}`]: orderValue };
+  const skipValue = Number.parseInt(page, 10);
+  const skip = Number.isNaN(skipValue) ? 0 : (skipValue - 1) * limit;
 
   // @todo skip and limit, transform into APIAthlete
-  const athleteDocs = await Athlete.find(
-    { locations: location },
-    `_id athlete.firstname athlete.lastname athlete.profile stats.locations.${location}.${type}`,
-    { sort }
-  );
+  const athleteDocs = await Athlete.find({ locations: location }, projection, {
+    sort,
+    limit,
+    skip,
+  });
   if (!athleteDocs?.length) {
     return { status: 200, ranking: [] };
   }
+  return { status: 200, ranking: athleteDocs.map(APIAthlete) };
 }
 
-export default rankingForLocation;
+export default async function handler({ query }, res) {
+  const { status, ranking } = await rankingForLocation(query);
+
+  if (status === 404) {
+    res.status(404).json({ error: `Unknown location: ${location}` });
+    return;
+  }
+  if (status === 400) {
+    res
+      .status(400)
+      .json({ error: `Malformed query: ${JSON.stringify(query)}` });
+    return;
+  }
+
+  res.status(200).json(ranking);
+}
